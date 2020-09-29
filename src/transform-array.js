@@ -1,40 +1,54 @@
-const CustomError = require("../extensions/custom-error");
 
-module.exports = function transform(/* arr */) {
-  throw new CustomError('Not implemented');
-  // remove line with error and write your code here
-};
-/*
+
 module.exports = function transform( arr ) {
-  `--discard-next`
-  `--discard-prev` 
-  `--double-next` 
-  `--double-next`
-  arr.map(function(){
+  let checkArr = [`--discard-next`, `--discard-prev`, `--double-next`, `--double-prev`]
+let newArr = arr.slice();
+let newArr3 =[]
+newArr.forEach(function(item, index) {
+  let indexOfItem=checkArr.indexOf(item)
+  switch (indexOfItem) {
+    case 0:
+      if(index!=newArr.length-1){
+        delete newArr[index]
+        delete newArr[index+1]
+      }else{
+        delete newArr[index]
+      }
+    break;
+    case 1:
+      if(index!=0){
+        delete newArr[index]
+        delete newArr[index-1]
+      }else{
+        delete newArr[index]
+      }
+    break;
+    case 2:
+      if(index!=newArr.length-1){
+        delete newArr[index]
+        newArr.splice(index, 1, newArr[index+1])
+      }else{
+        delete newArr[index]
+      }
+      break;
+    case 3:
+      if(index!=0){
+        delete newArr[index]
+        newArr.splice(index, 1, newArr[index-1])
+      }else{
+        delete newArr[index]
+      }
+        break;
+    default:
+      return newArr
+}
+  }
+)
+newArr.forEach(function(item){
+if(item!==( undefined)){
+  newArr3.push(item)
+}
+})
+return newArr3
+}
 
-  })
-  return arr.find(`--discard-next`)
-  // remove line with error and write your code here
-};
-*/
-
-
-/*
-Ваша задача — реализовать функцию `transform(arr)`, которая принимает массив (тип `array`) и возвращает **преобразованный** массив,
- основываясь на **управляющих последовательностях**, которые содержит `arr`. 
- **Управляющие последовательности** — это определенные строковые элементы вышеупомянутого массива:
-* `--discard-next` исключает следующий за ней элемент исходного массива из преобразованного массива.
-* `--discard-prev` исключает предшествующий ей элемент исходного массива из преобразованного массива.
-* `--double-next` удваивает следующий за ней элемент исходного массива в преобразованном массиве.
-* `--double-next` удваивает предшествующий ей элемент исходного массива в преобразованном массиве.
-
-Например:
-
-`transform([1, 2, 3, '--double-next', 4, 5])` => `[1, 2, 3, 4, 4, 5]`
-
-`transform([1, 2, 3, '--discard-prev', 4, 5])` => `[1, 2, 4, 5]`
-
-Функция не должна изменять исходный массив. Управляющие последовательности применяются **последовательно, слева направо**. Управляющие последовательности **не попадают** в преобразованный массив. Управляющие последовательности в исходном массиве не встречаются подряд (не следуют одна за другой). Если около управляющей последовательности **нет элемента**, к которому она может быть применена, **она не делает ничего**. Функция должна выбросить ошибку, если `arr` не является массивом. 
-
-Напишите свой код в `src/transform-array.js`.
- */
