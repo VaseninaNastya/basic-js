@@ -5,13 +5,11 @@ module.exports = function getSeason( date ) {
     return  'Unable to determine the time of year!'
   }
   
-  if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
+  if ( !date.getTime()) {  
     return new Error('Unable to determine the time of year!');
   }
   
-  if ( Object.prototype.toString.call(date) != "[object Date]" ) {
-    return new Error('Unable to determine the time of year!');
-  }
+
   
   let month = date.getMonth()
   if(month == 11 || month == 0 || month == 1 ){

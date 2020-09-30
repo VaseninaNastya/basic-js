@@ -2,7 +2,6 @@
 const chainMaker = {
   arr: [],
   getLength() {
-
     return this.arr.length
   },
   addLink(value) {
